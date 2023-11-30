@@ -2,11 +2,9 @@ package com.onenet.studio.sdk.sample.controllers;
 
 import com.alibaba.fastjson.JSON;
 import com.onenet.studio.acc.sdk.OpenApi;
-import com.onenet.studio.acc.sdk.OpenApiExtention;
 import com.onenet.studio.acc.sdk.OpenApiFactory;
 import com.onenet.studio.sdk.sample.models.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,7 +31,7 @@ public class DeviceController {
      * @return
      */
     @PostMapping("/thing/property/post")
-    public ResponseDto postProperty(@RequestParam String devKey, @RequestBody Map<String, Object> postBody) throws Exception {
+    public ResponseDto postProperty(@RequestParam String devKey, @RequestParam String identifier, @RequestBody Map<String, Object> postBody) throws Exception {
 
         OpenApi openApi = openApiFactory.create(devKey);
 
@@ -47,7 +45,7 @@ public class DeviceController {
             Map<String, Object> locationMap = new HashMap<>();
             locationMap.put("value", JSON.toJSON(postBody));
             locationMap.put("time", now);
-            params.put("Location", locationMap);
+            params.put(identifier, locationMap);
         }
         oneJson.put("params", params);
         String oneJsonStr = JSON.toJSONString(oneJson);
@@ -62,7 +60,7 @@ public class DeviceController {
      * @return
      */
     @PostMapping("/thing/event/post")
-    public ResponseDto postEvent(@RequestParam String devKey, @RequestBody Map<String, Object> postBody) throws Exception {
+    public ResponseDto postEvent(@RequestParam String devKey, @RequestParam String identifier, @RequestBody Map<String, Object> postBody) throws Exception {
 
         OpenApi openApi = openApiFactory.create(devKey);
 
@@ -76,7 +74,7 @@ public class DeviceController {
             Map<String, Object> map = new HashMap<>();
             map.put("value", JSON.toJSON(postBody));
             map.put("time", now);
-            params.put("SanitationTruck", map);
+            params.put(identifier, map);
         }
         oneJson.put("params", params);
         String oneJsonStr = JSON.toJSONString(oneJson);
