@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @author: fanhaiqiu
  * @date: 2020/12/22
  */
-public class MqttClientContext {
+public class MqttClientContext implements AutoCloseable {
 
     /**
      * 固定版本
@@ -95,6 +96,16 @@ public class MqttClientContext {
      */
     private Topic topic;
 
+    public void keepAlive() {
+        this.activeTime = LocalDateTime.now();
+    }
+
+    public LocalDateTime getActiveTime() {
+        return activeTime;
+    }
+
+    private LocalDateTime activeTime;
+
 
     public static MqttClientContext create() {
         return new MqttClientContext();
@@ -109,10 +120,12 @@ public class MqttClientContext {
     public void init() throws Exception {
         this.topic = new Topic(this.productId, this.devKey);
         MqttClient client = new MqttClient(this.url, this.devKey);
+        client.setTimeToWait(1000);
         MqttConnectOptions connOpts = createConnOpts();
-        client.connect(connOpts);
         this.createCallback();
         client.setCallback(this.callback);
+        client.connect(connOpts);
+        this.activeTime = LocalDateTime.now();
         this.mqttClient = client;
     }
 
@@ -396,6 +409,15 @@ public class MqttClientContext {
         callback.setContext(this);
         this.callback = callback;
         return this;
+    }
+
+    @Override
+    public void close() throws Exception {
+        close(false);
+    }
+
+    public void close(boolean force) throws Exception {
+        this.mqttClient.close(force);
     }
 
 

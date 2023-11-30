@@ -1,0 +1,114 @@
+{
+  "version": "1.0",
+  "profile": {
+    "industryId": "1",
+    "sceneId": "14",
+    "categoryId": "285",
+    "productId": "vOCKMQW4sv"
+  },
+  "properties": [
+    {
+      "identifier": "Location",
+      "name": "位置信息",
+      "functionType": "u",
+      "accessMode": "rw",
+      "desc": "位置信息",
+      "dataType": {
+        "type": "struct",
+        "specs": [
+          {
+            "name": "经度",
+            "identifier": "Longitude",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "max": "180",
+                "min": "-180",
+                "step": "0.0000001",
+                "unit": "度 / °"
+              }
+            }
+          },
+          {
+            "name": "纬度",
+            "identifier": "Latitude",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "max": "90",
+                "min": "-90",
+                "step": "0.0000001",
+                "unit": "度 / °"
+              }
+            }
+          },
+          {
+            "name": "海拔",
+            "identifier": "Altitude",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "max": "999999",
+                "min": "0",
+                "step": "0.001",
+                "unit": "米 / m"
+              }
+            }
+          },
+          {
+            "name": "速度",
+            "identifier": "Speed",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "max": "9999",
+                "min": "0",
+                "step": "0.0001",
+                "unit": "千米每小时 / km/h"
+              }
+            }
+          },
+          {
+            "name": "时间",
+            "identifier": "Time",
+            "dataType": {
+              "type": "date",
+              "specs": {}
+            }
+          },
+          {
+            "name": "方向",
+            "identifier": "Direction",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "max": "360",
+                "min": "0",
+                "step": "0.0001",
+                "unit": "度 / °"
+              }
+            }
+          },
+          {
+            "name": "卫星数",
+            "identifier": "SatelliteNum",
+            "dataType": {
+              "type": "int32",
+              "specs": {
+                "max": "9999",
+                "min": "0",
+                "step": "1",
+                "unit": "个"
+              }
+            }
+          }
+        ]
+      },
+      "functionMode": "property",
+      "required": false
+    }
+  ],
+  "events": [],
+  "services": [],
+  "combs": []
+}

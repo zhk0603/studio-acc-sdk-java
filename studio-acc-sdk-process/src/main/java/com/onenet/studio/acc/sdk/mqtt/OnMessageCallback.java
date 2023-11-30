@@ -58,6 +58,7 @@ public class OnMessageCallback implements MqttCallback {
             if (Objects.isNull(id)) {
                 return;
             }
+            System.out.println("messageArrived::: " + jsonObject);
             Object awaitObject = context.getAwaitObject(id);
             context.putReply(id, jsonObject);
             synchronized (awaitObject) {
@@ -70,7 +71,7 @@ public class OnMessageCallback implements MqttCallback {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        context.keepAlive();
     }
 
     public void setContext(MqttClientContext context) {

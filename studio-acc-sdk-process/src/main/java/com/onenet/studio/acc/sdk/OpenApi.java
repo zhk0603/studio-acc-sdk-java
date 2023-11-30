@@ -5,7 +5,14 @@ import com.onenet.studio.acc.sdk.interfaces.OpenApiCallback;
 import com.onenet.studio.acc.sdk.mqtt.MqttClientContext;
 import com.onenet.studio.acc.sdk.util.EncryptUtil;
 
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author: fanhaiqiu
@@ -184,7 +191,42 @@ public class OpenApi {
         mqttClientContext.getMqttClient().disconnect();
     }
 
+    public static final class OpenApiCache {
+        static final ConcurrentHashMap<String, OpenApi> CACHE = new ConcurrentHashMap(64);
+        private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        static {
+            scheduler.scheduleAtFixedRate(OpenApiCache::cleanupExpiredCache, 60, 60, TimeUnit.SECONDS);
+        }
+
+        private static void remove(String key) {
+            OpenApi openApi = CACHE.remove(key);
+            if (openApi != null) {
+                try {
+                    openApi.disconnect();
+                    openApi.mqttClientContext.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        private static synchronized void cleanupExpiredCache() {
+            try {
+                LocalDateTime time = LocalDateTime.now().plusMinutes(-10);
+                CACHE.entrySet().stream()
+                        .filter(x -> time.isAfter(x.getValue().mqttClientContext.getActiveTime()))
+                        .collect(Collectors.toList())
+                        .forEach(x -> remove(x.getKey()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static final class Builder {
+
+
         /**
          * mqtt 地址
          */
@@ -261,18 +303,29 @@ public class OpenApi {
 
         public OpenApi build() throws Exception {
             this.check();
-            OpenApi openApi = new OpenApi();
-            MqttClientContext mqttClientContext = MqttClientContext.create()
-                    .url(this.url)
-                    .productId(this.productId)
-                    .devKey(this.devKey)
-                    .accessKey(this.accessKey)
-                    .caCrtFile(this.caCrtFile)
-                    .expireTime(this.expireTime)
-                    .signatureMethod(this.signatureMethod);
-            mqttClientContext.init();
-            openApi.setMqttClientContext(mqttClientContext);
-            return openApi;
+
+            return OpenApiCache.CACHE.computeIfAbsent(this.getCacheKey(), key -> {
+                OpenApi openApi = new OpenApi();
+                MqttClientContext mqttClientContext = MqttClientContext.create()
+                        .url(this.url)
+                        .productId(this.productId)
+                        .devKey(this.devKey)
+                        .accessKey(this.accessKey)
+                        .caCrtFile(this.caCrtFile)
+                        .expireTime(this.expireTime)
+                        .signatureMethod(this.signatureMethod);
+                try {
+                    mqttClientContext.init();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                openApi.setMqttClientContext(mqttClientContext);
+                return openApi;
+            });
+        }
+
+        private String getCacheKey() {
+            return this.productId + this.devKey;
         }
 
         private void check() throws Exception {

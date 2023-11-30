@@ -822,7 +822,7 @@ public class OpenApiExtentionProcessor extends AbstractProcessor {
         StringBuilder contentBuilder = new StringBuilder();
         BufferedReader br = null;
         try {
-            String filePath = System.getProperty("user.dir") + File.separator + File.separator + path;
+            String filePath = this.getClass().getClassLoader().getResource(path).getPath();
             br = new BufferedReader(new FileReader(filePath));
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {

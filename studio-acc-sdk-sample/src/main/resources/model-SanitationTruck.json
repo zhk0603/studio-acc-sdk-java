@@ -1,0 +1,322 @@
+{
+  "version": "1.0",
+  "profile": {
+    "industryId": "1",
+    "sceneId": "14",
+    "categoryId": "285",
+    "productId": "ku6G2Oeaj5"
+  },
+  "properties": [],
+  "events": [
+    {
+      "identifier": "SanitationTruck",
+      "name": "环卫车信息",
+      "functionType": "u",
+      "eventType": "info",
+      "desc": "",
+      "outputData": [
+        {
+          "identifier": "msgId",
+          "name": "消息Id",
+          "dataType": {
+            "type": "string",
+            "specs": {
+              "length": 256
+            }
+          }
+        },
+        {
+          "identifier": "CarInfo",
+          "name": "车辆信息",
+          "dataType": {
+            "type": "struct",
+            "specs": [
+              {
+                "name": "设备手机号",
+                "identifier": "mobileNumber",
+                "dataType": {
+                  "type": "string",
+                  "specs": {
+                    "length": 256
+                  }
+                }
+              },
+              {
+                "name": "数据上报时间",
+                "identifier": "acqTime",
+                "dataType": {
+                  "type": "date",
+                  "specs": {}
+                }
+              },
+              {
+                "name": "经度",
+                "identifier": "longitude",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "0.01",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "纬度",
+                "identifier": "latitude",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "0.01",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "里程表值",
+                "identifier": "mileage",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "9999",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "ACC",
+                "identifier": "acc",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "1",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "gps速度",
+                "identifier": "gpsSpeed",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "方向",
+                "identifier": "direction",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "359",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "卫星数量",
+                "identifier": "statelliteNum",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "999999",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "补报标记",
+                "identifier": "missedTag",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "1",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "状态代码",
+                "identifier": "statusFlag",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "999999",
+                    "min": "-999999",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "报警标志",
+                "identifier": "alertFlag",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "999999",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "油位值",
+                "identifier": "oilStage",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "剩余油量",
+                "identifier": "oilVolume",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "水位值",
+                "identifier": "waterStage",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "剩余水量",
+                "identifier": "waterVolume",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "载重",
+                "identifier": "loadSensor",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "正反转",
+                "identifier": "inversionSensor",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "2",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "转速",
+                "identifier": "inversionSpeed",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "9999999",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "温度",
+                "identifier": "temperature",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "湿度",
+                "identifier": "humidity",
+                "dataType": {
+                  "type": "double",
+                  "specs": {
+                    "max": "99999999.99",
+                    "min": "-99999999.99",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              },
+              {
+                "name": "举升状态",
+                "identifier": "liftSensor",
+                "dataType": {
+                  "type": "int32",
+                  "specs": {
+                    "max": "2",
+                    "min": "0",
+                    "step": "",
+                    "unit": ""
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "functionMode": "event",
+      "required": false
+    }
+  ],
+  "services": [],
+  "combs": []
+}
